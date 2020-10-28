@@ -1,25 +1,49 @@
-import logo from './logo.svg';
+import React, {Component} from 'react';
 import './App.css';
+import ToDoItem from './component/toDoList'
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends Component {
+  constructor(props){
+    super(props);
+    this.state = {
+      toDoList : [
+        {title: 'Mua bim bim', isComplete:true},
+        {title: 'washing the sweetpotato', isComplete:true},
+        {title: 'typing the code', isComplete:false},
+      ]
+    }
+  }
+  onItemClick(x){
+   return (event )=> {
+     const isComplete = x.isComplete;
+     const {toDoList} = this.state
+     const index = toDoList.indexOf(x)
+     this.setState({
+       toDoList:[
+          ...toDoList.slice(0,index),
+          {
+            ...x,
+            isComplete: !isComplete
+          },
+          ...toDoList.slice(index+1)
+       ]
+     })
+   }
+    
+  }
+  render(){
+    return(
+      <div className="App">
+        {this.state.toDoList.map((x,index) => 
+           <ToDoItem 
+           key ={index}
+           item={x} 
+           onClick={this.onItemClick(x)} />
+        )}
+      </div>
+    )
+  }
+
 }
+export default App
 
-export default App;
