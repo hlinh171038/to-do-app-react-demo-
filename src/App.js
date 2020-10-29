@@ -16,6 +16,11 @@ class App extends Component {
     }
     this.onKeyUp = this.onKeyUp.bind(this);
     this.onChange = this.onChange.bind(this);
+    this.onTicked = this.onTicked.bind(this);
+    this.onCountItem = this.onCountItem.bind(this);
+    this.onShowActive = this.onShowActive.bind(this);
+    this.onShowComplete = this.onShowComplete.bind(this);
+    this.onShowAll = this.onShowAll.bind(this);
   }
   onItemClick(x){
    return (event )=> {
@@ -70,12 +75,56 @@ class App extends Component {
    })
   }
   }
-  
+  onTicked(event){ // ticked(4)
+    let {toDoList} = this.state;
+    for(var i=0 ;i<toDoList.length;i++){
+      if(toDoList[i].isComplete === true){
+        toDoList[i].isComplete = false;
+      }
+    }
+    this.setState({
+      toDoList
+    })
+  }
+  onCountItem(event){// goi thuc thi lun vi khong chua hanh dong nhu( onClick,...) (5)
+    let {toDoList} = this.state;
+    let count = 0;
+    for(var i=0;i<toDoList.length;i++){
+      if(toDoList[i].isComplete === true){
+        count ++;
+      }
+    }
+    console.log(count)
+    return count;
+  }
+  onShowActive(event){
+    let {toDoList} = this.state;
+    var filterToDoList =toDoList.filter(function(x){
+      return x.isComplete === true;
+    })
+    this.setState({
+      toDoList: filterToDoList
+    })
+  }
+  onShowComplete(event){
+    let {toDoList} = this.state;
+    var filterToDoList =toDoList.filter(function(x){
+      return x.isComplete === false;
+    })
+    this.setState({
+      toDoList: filterToDoList
+    })
+  }
+  onShowAll(event){
+   this.setState({
+     toDoList:this.state.toDoList
+   })
+  }
   render(){
     return(
       <div className="App">
         <div className="Header">
-          <img  src ={tick} width={32} height={32} />
+          <img onClick ={this.onTicked} src ={tick} width={32} height={32} />
           <input type="text"
            placeholder="Add to do list"
           value = {this.state.newItem} // value must call with onChange(2)
@@ -89,6 +138,17 @@ class App extends Component {
            onClick={this.onItemClick(x)}
            onDelete={this.onDelete(x)} /> // delete (3)
         )}
+        <div className="Footer">
+          <div className="CountItems">{this.onCountItem()} items left</div> 
+          <div className="Action">
+            <button onClick={this.onShowAll}>All</button>
+            <button onClick={this.onShowActive}>Active</button>
+            <button onClick={this.onShowComplete}>Complete</button>
+          </div>
+          <div className="link">
+            <a link="#">Clear component</a>
+          </div>
+        </div>
       </div>
     )
   }

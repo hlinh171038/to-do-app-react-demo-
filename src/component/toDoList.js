@@ -21,7 +21,7 @@ class ToDoList extends Component {
             })}>
                 <img onClick={this.props.onClick}  src={url} width={32}/>
                 <p className={classnames({ "text":this.props.item.isComplete})}>{this.props.item.title}</p>
-                <span onClick={this.props.onDelete}>X</span>
+                <span className="x" onClick={this.props.onDelete}>X</span>
             </div>
         )
     }

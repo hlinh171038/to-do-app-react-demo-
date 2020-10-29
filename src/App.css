@@ -18,4 +18,16 @@
 .Header>input:focus{
   outline: none;
 }
+.Footer{
+  display: flex;
+}
+.CountItems{
+  flex-grow: 1;
+}
+.Action{
+  flex-grow:2
+}
+.link{
+  flex-grow: 1;
+}
 
