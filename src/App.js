@@ -35,6 +35,17 @@ class App extends Component {
    }
     
   }
+  onDelete(x){
+    return(event)=>{ //called whn render and return other funtion (3)
+      const {toDoList} = this.state
+      const index = toDoList.indexOf(x);
+      console.log(index)
+     toDoList.splice(index,1);
+      this.setState({
+        toDoList
+      })
+    }
+  }
   onChange(event){ // onChange is called when value was changed(2)
     this.setState({
       newItem: event.target.value
@@ -59,11 +70,12 @@ class App extends Component {
    })
   }
   }
+  
   render(){
     return(
       <div className="App">
         <div className="Header">
-          <img src ={tick} width={32} height={32} />
+          <img  src ={tick} width={32} height={32} />
           <input type="text"
            placeholder="Add to do list"
           value = {this.state.newItem} // value must call with onChange(2)
@@ -74,7 +86,8 @@ class App extends Component {
            <ToDoItem 
            key ={index}
            item={x} 
-           onClick={this.onItemClick(x)} />
+           onClick={this.onItemClick(x)}
+           onDelete={this.onDelete(x)} /> // delete (3)
         )}
       </div>
     )
